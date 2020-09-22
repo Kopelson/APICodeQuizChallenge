@@ -2,22 +2,27 @@
 ///intizlizing quiz settings:
 let timer = 75;
 let difficulty = 10;
+let score=0;
 //each difficulty will adjust the amount of seconds each wrong question will be taken away from the timer
-const easy = 10;
+const easy = 5;
 const moderate = 15;
 const hard = 20;
 
 //setting up DOM elements that will need to be changed
-let timerEl = document.querySelector("#timer");
+const timerEl = document.querySelector("#timer");
+const questionnaireEl = document.querySelector("#questionnaire");
 
 function startQuiz() {
+    //changes quiz settings if applicable
     if (sessionStorage.length !== 0){
     let newTimer = sessionStorage.getItem("timer", timer);
     timer = newTimer;
     console.log(newTimer);
     timerEl.textContent = "Timer: " + newTimer;
     };
-
+    //This Generates a question
+    generateQuestion();
+    
     timerInterval = setInterval(function() {
         timer--;
         timerEl.textContent = "Timer: " + timer;
@@ -26,6 +31,144 @@ function startQuiz() {
         }
     }, 1000);
 };
+
+function generateQuestion(){
+    //this removes the elements in the jumbotron
+    removeAllChildNodes(questionnaireEl);
+    
+    //These create new elements for the questionnaire
+    let newH1 = document.createElement("h1");
+    let button1 = document.createElement("button");
+    let button2 = document.createElement("button");
+    let button3 = document.createElement("button");
+    let button4 = document.createElement("button");
+    let br1 = document.createElement("br");
+    let br2 = document.createElement("br");
+    let br3 = document.createElement("br");
+    let br4 = document.createElement("br");
+    let br5 = document.createElement("br");
+    let br6 = document.createElement("br");
+
+    //this styles on the new elements
+    button1.setAttribute("class", "btn btn-primary m2 w-50");
+    button2.setAttribute("class", "btn btn-primary m2 w-50");
+    button3.setAttribute("class", "btn btn-primary m2 w-50");
+    button4.setAttribute("class", "btn btn-primary m2 w-50");
+    
+    //This stores the random question
+    let question = getQuestion();
+    //this stores the correct answer index to the question *note the correct answer to a question is the same index on both arrays
+    let answer = questions.indexOf(question);
+    //These create text nodes to insert into the new elements
+    let newQuestion = document.createTextNode(`${question}`);
+    const newCorrectAnswer = document.createTextNode(`${answers[answer]}`);
+    let newRandomAnswer1 = document.createTextNode(`${getRandomAnswer()}`);
+    let newRandomAnswer2 = document.createTextNode(`${getRandomAnswer()}`);
+    let newRandomAnswer3 = document.createTextNode(`${getRandomAnswer()}`);
+
+    console.log(newCorrectAnswer);
+    console.log(newRandomAnswer1);
+    console.log(newRandomAnswer2);
+    console.log(newRandomAnswer3);
+   
+    //this randomly picks where to put the elements
+    let answerArray = [newRandomAnswer1, newRandomAnswer2, newRandomAnswer3, newCorrectAnswer];
+
+    shuffle(answerArray);
+
+    //this appends the text node to the different elements
+    newH1.appendChild(newQuestion);
+    button1.appendChild(answerArray[0]);
+    button2.appendChild(answerArray[1]);
+    button3.appendChild(answerArray[2]);
+    button4.appendChild(answerArray[3]);
+
+    // console.log(answers.indexOf(button1.innerHTML));
+    // console.log(answers.indexOf(button2.innerHTML));
+    // console.log(answers.indexOf(button3.innerHTML));
+    // console.log(answers.indexOf(button4.innerHTML));
+    // console.log(answer);
+    //adds id's to correct answer buttons
+        if(answers.indexOf(button1.innerHTML) === answer){
+            button1.setAttribute("id", "correctAnswer");
+        };
+
+        if(answers.indexOf(button2.innerHTML) === answer){
+            button2.setAttribute("id", "correctAnswer");
+        };
+
+        if(answers.indexOf(button3.innerHTML) === answer){
+            button3.setAttribute("id", "correctAnswer");
+        };
+
+        if(answers.indexOf(button4.innerHTML) === answer){
+            button4.setAttribute("id", "correctAnswer");
+        };
+
+    //adds an event listener to each button with the answer info
+    button1.setAttribute("onclick", "checkAnswer()");
+    button2.setAttribute("onclick", "checkAnswer()");
+    button3.setAttribute("onclick", "checkAnswer()");
+    button4.setAttribute("onclick", "checkAnswer()");
+
+
+    //this appends the new elements and texts to the DOM Questionnaire
+    questionnaireEl.appendChild(newH1);
+    questionnaireEl.appendChild(button1);
+    questionnaireEl.appendChild(br1);
+    questionnaireEl.appendChild(br2);
+    questionnaireEl.appendChild(button2);
+    questionnaireEl.appendChild(br3);
+    questionnaireEl.appendChild(br4);
+    questionnaireEl.appendChild(button3);
+    questionnaireEl.appendChild(br5);
+    questionnaireEl.appendChild(br6);
+    questionnaireEl.appendChild(button4);
+};
+
+//Checking to see if the seleced answer is correct and then adding points to score or deducting time. Then presenting a new question
+function checkAnswer(){
+    let x = document.getElementById("correctAnswer");
+    console.log(x.innerHTML);
+    console.log(this.event.target.innerHTML);
+    if(this.event.target.innerHTML === x.innerHTML){
+        score++;
+        console.log("User answered correctly & the score is increased by 1");
+        console.log(score);
+        return generateQuestion();
+    } else {
+        timer = timer - difficulty;
+        console.log("User answered incorrectly & the time is decreased by "+ difficulty);
+        return generateQuestion();
+    };
+};
+
+//Tutorial on how to shuffle an array https://javascript.info/task/shuffle#:~:text=Write%20the%20function%20shuffle(array,%2C%202%5D%20%2F%2F%20...
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    };
+  };
+
+//Tutorial on how to remove all children elements https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+//This handles getting new questions
+function getQuestion(){
+    let getQuestionIndex = Math.floor(Math.random()*questions.length);
+    return questions[getQuestionIndex];
+};
+
+//This handles selecting random answers for questions
+function getRandomAnswer(){
+    let getRandomAnswerIndex = Math.floor(Math.random()*answers.length);
+    return answers[getRandomAnswerIndex];
+}
 
 //This updates the quiz settings when the settings is saved:
 function settings() {
@@ -87,7 +230,7 @@ let questions = [
     "Numbers, strings, booleans, null and undefined are called what?",
     "What means 'no object'?",
     "What is a number that can't be represented in JavaScript?",
-    "What function is used to generate time=based ecents after a certain time has passed?",
+    "What function is used to generate time based events after a certain time has passed?",
     "What type of functions are handled before your code is evaluated?",
     "What type of functions are evaluated at runtime with the rest of your code?",
     "What are nameless function expressions called?",
