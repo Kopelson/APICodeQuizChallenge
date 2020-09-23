@@ -15,7 +15,7 @@
     <header>
         <!-- Bootstrap Nav Bar -->
         <nav class="nav nav-fill">
-            <a class="nav-link" href="../index.html">Return to Quiz</a>
+            <a class="nav-link" href="../index.html" onclick="resetQuiz()">Return to Quiz</a>
             <a class="nav-link" data-toggle="modal" data-target="#settingsModal"><img src="../images/settings.png" alt="Settings icon" style="width: 20px;"></a>
         </nav>
     </header>
@@ -23,12 +23,12 @@
     <main class="container">
         <div class="jumbotron">
         <h1>Highscores</h1>
-        <table>
+        <table id="table">
             <tr>
-                <th>
+                <th class="p-2 w-100">
                     Initials
                 </th>
-                <th>
+                <th class="p-2">
                     Scores
                 </th>
             </tr>
@@ -41,7 +41,7 @@
                 </td>
             </tr>
         </table>
-        <a type="button" class="btn btn-primary" id="return" href="../index.html">Try Again?</a>
+        <a type="button" class="btn btn-primary" id="return" href="../index.html" onclick="resetQuiz()">Try Again?</a>
         <button type="button" class="btn btn-danger" id="clear">Clear Highscores</button>
         </div>
  </main>
@@ -58,7 +58,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <label for="timerLength">Timer Length: (seconds)</label>
-          <input type="number" id="timerLength" placeholder="75"  min="0" max="180">
+          <input type="number" id="timerLength" placeholder="75" value="75"  min="0" max="180">
           <br>
           <label for="difficulty">Difficulty: </label>
           <select name="difficulty" id="difficulty">

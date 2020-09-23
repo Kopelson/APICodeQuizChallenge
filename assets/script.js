@@ -1,25 +1,36 @@
 
-///intizlizing quiz settings:
+//intializing quiz settings:
 let timer = 75;
-let difficulty = 10;
+let difficulty = 5;
 let score=0;
+
 //each difficulty will adjust the amount of seconds each wrong question will be taken away from the timer
 const easy = 5;
 const moderate = 15;
 const hard = 20;
+//intializing highscore array and initals 
+let highscores = [];
+let initials = [];
 
-//setting up DOM elements that will need to be changed
+//fill arrays with existing data
+init();
+
+//setting up DOM elements that will need to be changed in index.html
 const timerEl = document.querySelector("#timer");
 const questionnaireEl = document.querySelector("#questionnaire");
+let tableEl = document.querySelector("#table");
+// let questionnaireForm = document.querySelector("#questionnaire-form");
+// let questionnaireInput = document.querySelector("#questionnaire-input");
 
 function startQuiz() {
     //changes quiz settings if applicable
-    if (sessionStorage.length !== 0){
-    let newTimer = sessionStorage.getItem("timer", timer);
+    if (localStorage.getItem("timer") !== null){
+    let newTimer = localStorage.getItem("timer", timer);
     timer = newTimer;
     console.log(newTimer);
     timerEl.textContent = "Timer: " + newTimer;
     };
+
     //This Generates a question
     generateQuestion();
     
@@ -28,8 +39,58 @@ function startQuiz() {
         timerEl.textContent = "Timer: " + timer;
         if (timer < 0){
             clearInterval(timerInterval);
+            highscores.push(score);
+            console.log(score);  
+            storedHighscores();
+            endQuiz();
+            //variables to store newly made form
+            let questionnaireSubmit = document.querySelector("#questionnaire-submit");
+            let questionnaireInput = document.querySelector("#questionnaire-input");
+            //When Button is clicked
+            questionnaireSubmit.addEventListener("click", function() {
+                let inputText = questionnaireInput.value.trim();
+                //return from function early if submitted inputText is blank
+                if (inputText === "") {
+                return;
+                };
+                // Add new inputText to initials array, clear the input
+                console.log(inputText);
+                console.log(typeof inputText);
+                initials.push(inputText);
+                questionnaireInput.value = "";
+                window.location.replace("./assets/highscore.html");
+                });
         }
     }, 1000);
+};
+
+function endQuiz(){
+    removeAllChildNodes(questionnaireEl);
+    let formEl = document.createElement("form");
+    let h1El = document.createElement("h1");
+    let labelEl = document.createElement("label");
+    let inputEl = document.createElement("input");
+    let submitEl = document.createElement("button");
+    
+    h1El.textContent = "Times Up! The quiz has ended.";
+    labelEl.textContent = "Please submit your initials: ";
+    submitEl.textContent = "Submit";
+
+    
+    submitEl.setAttribute("type", "submit");
+    submitEl.setAttribute("value", "Submit");
+
+    labelEl.setAttribute("class", "m-2");
+    submitEl.setAttribute("class", "btn btn-primary m-2")
+
+    inputEl.setAttribute("id", "questionnaire-input")
+    submitEl.setAttribute("id", "questionnaire-submit")
+
+    questionnaireEl.appendChild(formEl);
+    questionnaireEl.appendChild(h1El);
+    questionnaireEl.appendChild(labelEl);
+    questionnaireEl.appendChild(inputEl);
+    questionnaireEl.appendChild(submitEl);
 };
 
 function generateQuestion(){
@@ -42,18 +103,12 @@ function generateQuestion(){
     let button2 = document.createElement("button");
     let button3 = document.createElement("button");
     let button4 = document.createElement("button");
-    let br1 = document.createElement("br");
-    let br2 = document.createElement("br");
-    let br3 = document.createElement("br");
-    let br4 = document.createElement("br");
-    let br5 = document.createElement("br");
-    let br6 = document.createElement("br");
 
     //this styles on the new elements
-    button1.setAttribute("class", "btn btn-primary m2 w-50");
-    button2.setAttribute("class", "btn btn-primary m2 w-50");
-    button3.setAttribute("class", "btn btn-primary m2 w-50");
-    button4.setAttribute("class", "btn btn-primary m2 w-50");
+    button1.setAttribute("class", "btn btn-primary m-2 w-50");
+    button2.setAttribute("class", "btn btn-primary m-2 w-50");
+    button3.setAttribute("class", "btn btn-primary m-2 w-50");
+    button4.setAttribute("class", "btn btn-primary m-2 w-50");
     
     //This stores the random question
     let question = getQuestion();
@@ -66,10 +121,10 @@ function generateQuestion(){
     let newRandomAnswer2 = document.createTextNode(`${getRandomAnswer()}`);
     let newRandomAnswer3 = document.createTextNode(`${getRandomAnswer()}`);
 
-    console.log(newCorrectAnswer);
-    console.log(newRandomAnswer1);
-    console.log(newRandomAnswer2);
-    console.log(newRandomAnswer3);
+    // console.log(newCorrectAnswer);
+    // console.log(newRandomAnswer1);
+    // console.log(newRandomAnswer2);
+    // console.log(newRandomAnswer3);
    
     //this randomly picks where to put the elements
     let answerArray = [newRandomAnswer1, newRandomAnswer2, newRandomAnswer3, newCorrectAnswer];
@@ -83,11 +138,7 @@ function generateQuestion(){
     button3.appendChild(answerArray[2]);
     button4.appendChild(answerArray[3]);
 
-    // console.log(answers.indexOf(button1.innerHTML));
-    // console.log(answers.indexOf(button2.innerHTML));
-    // console.log(answers.indexOf(button3.innerHTML));
-    // console.log(answers.indexOf(button4.innerHTML));
-    // console.log(answer);
+    
     //adds id's to correct answer buttons
         if(answers.indexOf(button1.innerHTML) === answer){
             button1.setAttribute("id", "correctAnswer");
@@ -115,31 +166,29 @@ function generateQuestion(){
     //this appends the new elements and texts to the DOM Questionnaire
     questionnaireEl.appendChild(newH1);
     questionnaireEl.appendChild(button1);
-    questionnaireEl.appendChild(br1);
-    questionnaireEl.appendChild(br2);
     questionnaireEl.appendChild(button2);
-    questionnaireEl.appendChild(br3);
-    questionnaireEl.appendChild(br4);
     questionnaireEl.appendChild(button3);
-    questionnaireEl.appendChild(br5);
-    questionnaireEl.appendChild(br6);
     questionnaireEl.appendChild(button4);
 };
 
 //Checking to see if the seleced answer is correct and then adding points to score or deducting time. Then presenting a new question
 function checkAnswer(){
-    let x = document.getElementById("correctAnswer");
-    console.log(x.innerHTML);
-    console.log(this.event.target.innerHTML);
-    if(this.event.target.innerHTML === x.innerHTML){
-        score++;
-        console.log("User answered correctly & the score is increased by 1");
-        console.log(score);
-        return generateQuestion();
+    if(timer > 0){
+        let x = document.getElementById("correctAnswer");
+        //console.log(x.innerHTML);
+        //console.log(this.event.target.innerHTML);
+        if(this.event.target.innerHTML === x.innerHTML){
+            score++;
+            //console.log("User answered correctly & the score is increased by 1");
+            //console.log(score);
+            return generateQuestion();
+        } else {
+            timer = timer - difficulty;
+            //console.log("User answered incorrectly & the time is decreased by "+ difficulty);
+            return generateQuestion();
+        };
     } else {
-        timer = timer - difficulty;
-        console.log("User answered incorrectly & the time is decreased by "+ difficulty);
-        return generateQuestion();
+        console.log("Time is out! Scores have been updated")
     };
 };
 
@@ -170,6 +219,16 @@ function getRandomAnswer(){
     return answers[getRandomAnswerIndex];
 }
 
+//stringify and set "highscores" key in local storage to highscores array
+function storeHighscores() {
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+};
+
+//stringify and set "initials" key in local storage to initials array
+function storeInitials() {
+    localStorage.setItem("initials", JSON.stringify(initials));
+};
+
 //This updates the quiz settings when the settings is saved:
 function settings() {
     timer = document.querySelector("#timerLength").value;
@@ -184,11 +243,76 @@ function settings() {
         console.log("Error user did not select a valid difficulty.");
     };
     console.log("New settings: Timer is set to " + timer + " and difficulty is set to " + difficulty);
-   sessionStorage.setItem("timer", timer); 
-   sessionStorage.setItem("diffculty", difficulty);
+   localStorage.setItem("timer", timer); 
+   localStorage.setItem("diffculty", difficulty);
    console.log("data has been stored");
 };
 
+function renderTable() {
+    //Clear table element
+    removeAllChildNodes(tableEl);
+
+    let row1 = document.createElement("tr");
+    let tableHeader1 = document.createElement("th");
+    let tableHeader2 = document.createElement("th");
+
+    tableHeader1.textContent ="Initials";
+    tableHeader2.textContent= "Score";
+
+    tableHeader1.setAttribute("class", "p-2 w-100");
+    tableHeader2.setAttribute("class", "p-2");
+
+    tableEl.appendChild(row1);
+    tableEl.appendChild(tableHeader1);
+    tableEl.appendChild(tableHeader2);
+
+    //render new table elements for each initials and highscores
+    for (let i = 0; i < initials.length; i++){
+        let initial = initials[i];
+        let highscore = highscores[i];
+
+        let tableRow = document.createElement("tr");
+        let tableDataInitials = document.createElement("td");
+        let tableDataHighscores = document.createElement("td");
+
+        tableDataInitials.textContent = initial;
+        tableDataInitials.setAttribute("data-index", i);
+        tableDataHighscores.textContent = highscore;
+        tableDataHighscores.setAttribute("data-index", i);
+
+        tableRow.appendChild(tableDataInitials);
+        tableRow.appendChild(tableDataHighscores);
+        tableEl.appendChild(tableRow);
+    };
+    console.log("Table has been updated.")
+};
+
+
+function init(){
+    //Get stored initials and highscores from local storage
+    //Parsing the JSON string to an object
+    let storedInitials = JSON.parse(localStorage.getItem("initials"));
+    let storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+
+    //if initals and highscores were retreived from localStorage, update the initals and highscores array to it
+    if(storeInitials !== null) {
+        initials = storedInitials;
+    };
+
+    if(storedHighscores !== null) {
+        highscores = storedHighscores;
+    };
+
+    //render initials and highscores to the DOM
+    //renderTable();
+};
+
+function resetQuiz(){
+    timer = 75;
+    difficulty = 10;
+    score=0;
+
+};
 
 //Questions stored in an array called questions
 let questions = [
@@ -203,8 +327,6 @@ let questions = [
     "Which kind of statements allow you to execute code many times by looping?",
     "If console.log desplays messages to the console, where does alert display messages?",
     "What is an approximation of what your real code should do?",
-    "Which answer is an example of a comparison operator?",
-    "Which answer is an example of a logical operator?",
     "What function can you use to generate a random number between 0 and 1?",
     "What function allows you to round down a decimal number to the nearest integer?",
     "What JavaScript function shows a dialog with message and space for the user to enter a value?",
@@ -239,7 +361,7 @@ let questions = [
 //Answers stored in an array called answers
 let answers = [
     "behavior",
-    "<script> tag",
+    "script tag",
     "src",
     "=",
     '"Hello, World"',
@@ -249,8 +371,6 @@ let answers = [
     "while/for",
     "Users",
     "Pseudocode",
-    "<",
-    "&&",
     "Math.random",
     "Math.floor",
     "prompt",
