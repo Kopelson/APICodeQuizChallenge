@@ -1,4 +1,3 @@
-
 //intializing quiz settings:
 let timer = 75;
 let difficulty = 5;
@@ -19,8 +18,6 @@ init();
 const timerEl = document.querySelector("#timer");
 const questionnaireEl = document.querySelector("#questionnaire");
 let tableEl = document.querySelector("#table");
-// let questionnaireForm = document.querySelector("#questionnaire-form");
-// let questionnaireInput = document.querySelector("#questionnaire-input");
 
 function startQuiz() {
     //changes quiz settings if applicable
@@ -41,7 +38,7 @@ function startQuiz() {
             clearInterval(timerInterval);
             highscores.push(score);
             console.log(score);  
-            storedHighscores();
+            storeHighscores();
             endQuiz();
             //variables to store newly made form
             let questionnaireSubmit = document.querySelector("#questionnaire-submit");
@@ -57,6 +54,7 @@ function startQuiz() {
                 console.log(inputText);
                 console.log(typeof inputText);
                 initials.push(inputText);
+                storeInitials();
                 questionnaireInput.value = "";
                 window.location.replace("./assets/highscore.html");
                 });
@@ -295,7 +293,7 @@ function init(){
     let storedHighscores = JSON.parse(localStorage.getItem("highscores"));
 
     //if initals and highscores were retreived from localStorage, update the initals and highscores array to it
-    if(storeInitials !== null) {
+    if(storedInitials !== null) {
         initials = storedInitials;
     };
 
@@ -402,4 +400,3 @@ let answers = [
     "anonymous",
     "nested"
 ];
-
