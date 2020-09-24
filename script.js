@@ -142,7 +142,7 @@ let quiz = {
         //grabbing the new elements by ids
         let questionnaireSubmit = document.querySelector("#questionnaire-submit");
         let questionnaireInput = document.querySelector("#questionnaire-input");
-
+        //user clicks submit button
         questionnaireSubmit.addEventListener("click", function() {
             //assing inputText to the value of the user input initials
             let inputText = questionnaireInput.value.trim();
@@ -158,6 +158,13 @@ let quiz = {
             questionnaireInput.value = "";
             //change to highscore html
             window.location.replace("./highscore.html");
+        });
+        //allows users to press enter to submit
+        questionnaireInput.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("questionnaire-submit").click();
+            }
         });
     },
     reset: function() {
