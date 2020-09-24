@@ -10,6 +10,19 @@ Project Link: https://kopelson.github.io/APICodeQuizChallenge/
 
 ## Credits
 
+### JavaScript.Info
+link to tutorial on how to shuffle an array: https://javascript.info/task/shuffle
+
+### JavaScriptTutorial.net
+Link to tutorial on how to remove all children elements: https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
+
+### W3Schools.com
+Link to tutorial on sounds in javascript: https://www.w3schools.com/graphics/game_sound.asp
+
+### SoundSilk.com
+Link to incorrect answer sound: https://soundsilk.com/wrong-answer-buzzer-royalty-free-sound-effect/
+Link to correct answer sound: https://soundsilk.com/gameshow-correct-answer-ding/
+
 ## License
 
 ### MIT License
