@@ -1,10 +1,9 @@
-//Initalizing
+//Initalizing selectors
 const startButtonEl = document.querySelector("#start");
 const timerEl = document.querySelector("#timer");
 const questionnaireEl = document.querySelector("#questionnaire");
-
-
-
+const resultEl = document.querySelector("#result");
+//This is the quiz object and contains different propertys and methods
 let quiz = {
     //properties
     timer: "75",
@@ -113,6 +112,8 @@ let quiz = {
     end: function() {
         //This removes all nodes from the jumbotron
         removeAllChildNodes(questionnaireEl);
+        //this removes the results of the previous question
+        removeAllChildNodes(resultEl);
         //This creates elements for the end of the quiz
         let formEl = document.createElement("form");
         let h1El = document.createElement("h1");
@@ -230,11 +231,21 @@ let quiz = {
     checkAnswer: function(event) {
         if(quiz.timer > 0){
             let x = document.getElementById("correctAnswer");
+            //Create new sound variables
+            let correctSound = new sound("./sounds/soundsilk-Correct.mp3");
+            let incorrectSound = new sound("./sounds/soundsilk-Incorrect.mp3");
+            //checks if this is the correct answer
             if(event.target.innerHTML === x.textContent){
                 quiz.score++;
+                quiz.displayResult("correct");
+                //Sound is from https://soundsilk.com
+                correctSound.play();
                 return quiz.generateQuestion();
             } else {
                 quiz.timer = quiz.timer - quiz.difficulty;
+                quiz.displayResult("incorrect");
+                //Sound is from https://soundsilk.com
+                incorrectSound.play();
                 return quiz.generateQuestion();
             };
         } else {
@@ -245,6 +256,34 @@ let quiz = {
     getQuestion: function() {
         let getQuestionDataIndex = Math.floor(Math.random()*quiz.questionData.length);
         return quiz.questionData[getQuestionDataIndex];
+    },
+    displayResult: function(result) {
+        //remove previous result
+        removeAllChildNodes(resultEl);
+        //create h1 elements
+        let h3Correct = document.createElement("h3");
+        let h3Incorrect = document.createElement("h3");
+        //create hr element
+        let hrEl = document.createElement("hr");
+
+        //put text in elements
+        h3Correct.textContent = "Correct!";
+        h3Incorrect.textContent = "Wrong!";
+
+        //add style to elements
+        h3Correct.setAttribute("class", "text-success");
+        h3Incorrect.setAttribute("class", "text-danger");
+        if(result === "correct"){
+        hrEl.setAttribute("class", "d-block p-1 bg-success");
+        resultEl.appendChild(h3Correct);
+        resultEl.appendChild(hrEl);
+        };
+        if(result === "incorrect"){
+        hrEl.setAttribute("class", "d-block p-1 bg-danger");
+        resultEl.appendChild(h3Incorrect);
+        resultEl.appendChild(hrEl);
+        };
+        return;
     }
 }
 //adds an event listener to the start quiz button
@@ -295,6 +334,26 @@ function init(){
         quiz.difficulty = difficulty;
     };
     quiz.reset();
+};
+
+//Sound function
+//Tutorial on sounds https://www.w3schools.com/graphics/game_sound.asp
+class sound {
+    constructor(src) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.volume = .2;
+        this.sound.style.display = "none";
+        document.body.appendChild(this.sound);
+        this.play = function () {
+            this.sound.play();
+        };
+        this.stop = function () {
+            this.sound.pause();
+        };
+    }
 };
 
 init();
