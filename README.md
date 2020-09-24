@@ -2,7 +2,7 @@
 
 ## Description
 
-## Table of COnetents
+## Table of Contents
 
 ## Overview
 
