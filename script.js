@@ -168,7 +168,7 @@ let quiz = {
         });
     },
     reset: function() {
-        timerEl.textContent = "TImer: " + quiz.timer;
+        timerEl.textContent = "Timer: " + quiz.timer;
     },
     generateQuestion: function() {
         //this removes the elements in the jumbotron
