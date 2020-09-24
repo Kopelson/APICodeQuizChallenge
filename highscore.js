@@ -1,7 +1,7 @@
 let tableEl = document.querySelector("#table");
 let clearEl = document.querySelector("#clear");
 
-//This renders the Highscores datatable
+//This renders the High scores data table
 function renderTable() {
     //Clear table element
     removeAllChildNodes(tableEl);

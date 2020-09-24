@@ -3,7 +3,7 @@ const startButtonEl = document.querySelector("#start");
 const timerEl = document.querySelector("#timer");
 const questionnaireEl = document.querySelector("#questionnaire");
 const resultEl = document.querySelector("#result");
-//This is the quiz object and contains different propertys and methods
+//This is the quiz object and contains different properties and methods
 let quiz = {
     //properties
     timer: "75",
@@ -49,12 +49,12 @@ let quiz = {
             answer: "while/for"
         },
         {
-            question: "If console.log desplays messages to the console, where does alert display messages?",
+            question: "If console.log displays messages to the console, where does alert display messages?",
             answer:  "Users"
         },
         {
             question: "What is an approximation of what your real code should do?",
-            answer: "Pseudocode"
+            answer: "Pseudo code"
         },
         {
             question: "What function can you use to generate a random number between 0 and 1?",
@@ -81,7 +81,7 @@ let quiz = {
             answer: "curly braces"
         },
         {
-            question: "What scope is visiable everwhere in your program?",
+            question: "What scope is visible everywhere in your program?",
             answer: "global"
         },
         {
@@ -144,7 +144,7 @@ let quiz = {
         let questionnaireInput = document.querySelector("#questionnaire-input");
         //user clicks submit button
         questionnaireSubmit.addEventListener("click", function() {
-            //assing inputText to the value of the user input initials
+            //trim the access from user input
             let inputText = questionnaireInput.value.trim();
             //return from function early if submitted inputText is blank
             if (inputText === "") {
@@ -156,7 +156,7 @@ let quiz = {
             storeData();
             //reset input to blank
             questionnaireInput.value = "";
-            //change to highscore html
+            //change to high score html
             window.location.replace("./highscore.html");
         });
         //allows users to press enter to submit
@@ -186,7 +186,7 @@ let quiz = {
         button3.setAttribute("class", "btn btn-primary m-2 w-50");
         button4.setAttribute("class", "btn btn-primary m-2 w-50");
 
-        //This stores the randomly grabed question 
+        //This stores the randomly grabbed question 
         let question = quiz.getQuestion();
         //This stores answer to question grabbed
         let answer = question.answer;
@@ -321,22 +321,22 @@ function removeAllChildNodes(parent) {
 
 //initializes localStorage settings and data
 function init(){
-    //Get stored initials and highscores from local storage
+    //Get stored initials and high scores from local storage
     //Parsing the JSON string to an object
     let userData = JSON.parse(localStorage.getItem("userData"));
-    //if initals and highscores were retreived from localStorage, update the initals and highscores array to it
+    //if initials and high scores were retrieved from localStorage, update the initials and high scores array to it
     if(userData !== null) {
         quiz.userData = userData;
     };
     //gets the timer settings from local storage
     let changedTimer = (localStorage.getItem("timer"));
-    //if the timer isnt null this will set the quiz timer to the changed setting
+    //if the timer is not null this will set the quiz timer to the changed setting
     if(changedTimer !== null){
         quiz.timer = changedTimer;
     }
     //gets the difficulty setting from local storage
     let difficulty = (localStorage.getItem("difficulty"));
-    //if the difficulty isnt null this will set the quiz difficulty to the changed setting
+    //if the difficulty is not null this will set the quiz difficulty to the changed setting
     if(difficulty !== null){
         quiz.difficulty = difficulty;
     };
