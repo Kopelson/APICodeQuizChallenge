@@ -8,6 +8,22 @@
 
 Project Link: https://kopelson.github.io/APICodeQuizChallenge/
 
+### Quiz
+![main](https://user-images.githubusercontent.com/57735283/94205774-d3bb0080-fe78-11ea-8dad-f0ed1b8773ae.gif)
+
+### Submit Initials
+![end](https://user-images.githubusercontent.com/57735283/94205781-d61d5a80-fe78-11ea-8db9-9130c0ce1fa3.gif)
+
+### Change Quiz Settings
+![settings](https://user-images.githubusercontent.com/57735283/94205785-d87fb480-fe78-11ea-8afc-f834fe6d5d2b.gif)
+
+### Local Storage
+![storage](https://user-images.githubusercontent.com/57735283/94205790-da497800-fe78-11ea-93a5-b45280ff4025.gif)
+
+### DOM Manipulation
+![table](https://user-images.githubusercontent.com/57735283/94205795-dc133b80-fe78-11ea-806e-19d8b9fe1e05.gif)
+
+
 ## Credits
 
 ### JavaScript.Info
