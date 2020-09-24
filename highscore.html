@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highscores</title>
-    <!-- Reset CSS -->
-    <link rel="stylesheet" href="../styles/reset.css">
+    <!-- Reset CSS
+    <link rel="stylesheet" href="../styles/reset.css"> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
     <header>
         <!-- Bootstrap Nav Bar -->
         <nav class="nav nav-fill">
-            <a class="nav-link" href="../index.html" onclick="resetQuiz()">Return to Quiz</a>
-            <a class="nav-link" data-toggle="modal" data-target="#settingsModal"><img src="../images/settings.png" alt="Settings icon" style="width: 20px;"></a>
+            <a class="nav-link" href="./index.html">Return to Quiz</a>
+            <a class="nav-link" data-toggle="modal" data-target="#settingsModal"><img src="./images/settings.png" alt="Settings icon" style="width: 20px;"></a>
         </nav>
     </header>
     <!-- Bootstarp Container -->
@@ -41,7 +39,7 @@
                 </td>
             </tr>
         </table>
-        <a type="button" class="btn btn-primary" id="return" href="../index.html" onclick="resetQuiz()">Try Again?</a>
+        <a type="button" class="btn btn-primary" id="return" href="./index.html">Try Again?</a>
         <button type="button" class="btn btn-danger" id="clear">Clear Highscores</button>
         </div>
  </main>
@@ -80,9 +78,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <!-- Quiz Script -->
-    <script src="script.js"></script>
-    <script>
-      renderTable();
-    </script>   
+    <script src="highscore.js"></script> 
 </body>
 </html>

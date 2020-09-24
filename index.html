@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Code Quiz</title>
     <!-- Reset CSS -->
-    <link rel="stylesheet" href="styles/reset.css">
+    <!-- <link rel="stylesheet" href="styles/reset.css"> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     
     <header>
         <nav class="nav nav-fill">
-            <a class="nav-link" href="assets/highscore.html">View Highscores</a>
+            <a class="nav-link" href="./highscore.html">View Highscores</a>
             <a class="nav-link disabled" id="timer" tabindex="-1" aria-disabled="true">Timer: 75</a>
         </nav>
     </header>
@@ -23,11 +21,11 @@
     <main class="container">
         <div class="jumbotron" id="questionnaire">
         <h1 id="question">Coding Quiz Challenge</h1>
-        <p id="answers">Try to answer the following code-related within the time limit. Keep in mind that incorrect answers will penalize your score and deduct 10 seconds from the timer. Good Luck!</p>
-        <button type="button" class="btn btn-primary" id="start" onclick="startQuiz()">Start Quiz</button>
+        <p id="answers">Try to answer the following code-related within the time limit. Keep in mind that incorrect answers will penalize you by deducting time from the timer. Good Luck! You can change settings in the view highscores link.</p>
+        <button type="button" class="btn btn-primary" id="start">Start Quiz</button>
         </div>
     </main>
     <!-- Quiz Script -->
-    <script src="assets/script.js"></script> 
+    <script src="script.js"></script> 
 </body>
 </html>
