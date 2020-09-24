@@ -20,7 +20,7 @@ Link to tutorial on how to remove all children elements: https://www.javascriptt
 Link to tutorial on sounds in javascript: https://www.w3schools.com/graphics/game_sound.asp
 
 ### SoundSilk.com
-Link to incorrect answer sound: https://soundsilk.com/wrong-answer-buzzer-royalty-free-sound-effect/
+Link to incorrect answer sound: https://soundsilk.com/wrong-answer-buzzer-royalty-free-sound-effect/ <br/>
 Link to correct answer sound: https://soundsilk.com/gameshow-correct-answer-ding/
 
 ## License
