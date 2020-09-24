@@ -2,7 +2,14 @@
 
 ## Description
 
+This app is a lightweight timed coding quiz with multiple-choice questions. By using DOM manipulation, JavaScript, Bootstrap, and the web browsers API local storage this app can challenge users to their knowlege of JavaScript. This app will run in the browser, and features a dynamically updated HTML and CSS powered by JavaScript code. The UI has a clean, polished, and responsive feel as user navigate through JavaScript based questions. Once the quiz has finished, the user can enter in their initials and save their high score on the scoreboard. The quiz settings can be adjusted and saved to user preference. Local storage store user initials, score, and settings. Settings can adjust the amount of seconds the quiz take to complete, and change the difficulty by changing the amount of time is taken away with each question wrong. This project shows how to work with API's to create functioning apps.
+
 ## Table of Contents
+
+* [Overview](#overview)
+* [Usage](#usage)
+* [Credits](#credits)
+* [License](#license)
 
 ## Overview
 
@@ -64,3 +71,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ## Badges
+<a href="https://img.shields.io/badge/CSS-4.7%25-purple"><img alt="CSS usage" src="https://img.shields.io/badge/CSS-4.7%25-purple"></a> <a href="https://img.shields.io/badge/HTML-20.3%25-red"><img alt="HTML usage" src="https://img.shields.io/badge/HTML-20.3%25-red"></a> <a href="https://img.shields.io/badge/JavaScript-75.0%25-yellow"><img alt="Javascript usage" src="https://img.shields.io/badge/JavaScript-75.0%25-yellow"></a> <a href="https://img.shields.io/badge/Frameworks-Bootstrap-blue"><img alt="Bootstrap framework" src="https://img.shields.io/badge/Frameworks-Bootstrap-blue"></a>
