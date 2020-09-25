@@ -7,7 +7,6 @@ This app is a lightweight timed coding quiz with multiple-choice questions. By u
 ## Table of Contents
 
 * [Overview](#overview)
-* [Usage](#usage)
 * [Credits](#credits)
 * [License](#license)
 
@@ -18,18 +17,27 @@ Project Link: https://kopelson.github.io/APICodeQuizChallenge/
 ### Quiz
 ![main](https://user-images.githubusercontent.com/57735283/94205774-d3bb0080-fe78-11ea-8dad-f0ed1b8773ae.gif)
 
-### Submit Initials
+  <p>To start the quiz the user hits the "Start Quiz" button! The quiz timer begins to count down and presents the user with a random question. Each question has one correct answer and 3 randomly drawn incorrect answers to choose from. ***Please note a correct answer could be displayed twice but both will count as correct if chosen. The beginning quiz settings is set at quiz timer 75 seconds, and each incorrect answer will deduct the quiz time by 5 seconds. Each correct answer will add one point to the users score.</p>    
+
+### Submit Initials 
 ![end](https://user-images.githubusercontent.com/57735283/94205781-d61d5a80-fe78-11ea-8db9-9130c0ce1fa3.gif)
+
+<p>When the timer reaches 0 seconds the quiz ends. The user is prompted to enter in their initials. Once submitted a high score page loads with a table showing users initials and score.</p>
 
 ### Change Quiz Settings
 ![settings](https://user-images.githubusercontent.com/57735283/94205785-d87fb480-fe78-11ea-8afc-f834fe6d5d2b.gif)
 
+<p>On the high score page, the user can change the quiz settings by selecting the settings icon on the top right. This will pull up a modal that can adjust quiz length and difficulty. Each difficulty adds a 5 more seconds to incorrect answers. Once the user hits save, the modal will close and settings are stored in browsers local storage. The next quiz that is played will use these saved settings.</p>
+
 ### Local Storage
 ![storage](https://user-images.githubusercontent.com/57735283/94205790-da497800-fe78-11ea-93a5-b45280ff4025.gif)
+
+<p> Using the browsers api local storage, users initials and scores can be saved. This means the user can refresh or even change pages without losing their high scores! </p>
 
 ### DOM Manipulation
 ![table](https://user-images.githubusercontent.com/57735283/94205795-dc133b80-fe78-11ea-806e-19d8b9fe1e05.gif)
 
+<p>Using DOM manipulation through JavaScript code, the UI can be changed on the fly. The user can also clear their high scores and the browser will refresh with an empty list.</p>
 
 ## Credits
 
