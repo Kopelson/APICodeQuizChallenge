@@ -1,25 +1,25 @@
+//initalizing needed selectors
 let tableEl = document.querySelector("#table");
 let clearEl = document.querySelector("#clear");
-
-//This renders the High scores data table
+//this renders the high scores data table
 function renderTable() {
-    //Clear table element
+    //clear table element
     removeAllChildNodes(tableEl);
-    //Create new elements
+    //create new elements
     let row1 = document.createElement("tr");
     let tableHeader1 = document.createElement("th");
     let tableHeader2 = document.createElement("th");
-    //Add text to the table header elements
+    //add text to the table header elements
     tableHeader1.textContent ="Initials";
     tableHeader2.textContent= "Score";
-    //Add attributes to the table header elements
+    //add attributes to the table header elements
     tableHeader1.setAttribute("class", "p-2 border border-primary");
     tableHeader2.setAttribute("class", "p-2 border border-primary");
-    //Append the table with a row, and table headers.
+    //append the table with a row, and table headers
     tableEl.appendChild(row1);
     tableEl.appendChild(tableHeader1);
     tableEl.appendChild(tableHeader2);
-    //Grab local storage and parse the JSON string
+    //grabs local storage and parse the JSON string
     if(localStorage.getItem("userData") !== null){
         let userData= JSON.parse(localStorage.userData);
         //render new table elements for each initials and score
@@ -44,15 +44,17 @@ function renderTable() {
         };
     };
 };
-
-//Adjust Quiz Settings
+//adjust quiz settings
 function settings() {
+    //initialize variables
     const easy = 5;
     const moderate = 10;
     const hard = 15;
     let timer = 75;
+    //grabs elements by ids
     timer = document.querySelector("#timerLength").value;
     difficulty = document.querySelector("#difficulty").value;
+    //sets difficulty to user setting
     if (difficulty === "easy"){
         difficulty = easy;
     } else if (difficulty === "moderate"){
@@ -60,22 +62,23 @@ function settings() {
     } else if (difficulty === "hard"){
         difficulty = hard;
     } else {
+        //this should never happen but logs error
         console.log("Error user did not select a valid difficulty.");
     };
+    //sets the timer and difficulty settings in local storage
    localStorage.setItem("timer", timer); 
    localStorage.setItem("difficulty", difficulty);
 };
-
-//Tutorial on how to remove all children elements https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
+//removes all children elements
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     };
 };
-
+//adds an event listener to the clear id element and removes userData from local storage, then renders a new high score table
 clearEl.addEventListener("click", function() {
     localStorage.removeItem("userData");
     renderTable();
 })
-
+//renders new table when page loads
 renderTable();

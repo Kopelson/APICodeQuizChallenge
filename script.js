@@ -1,15 +1,17 @@
-//Initalizing selectors
+//initalizing needed selectors
 const startButtonEl = document.querySelector("#start");
 const timerEl = document.querySelector("#timer");
 const questionnaireEl = document.querySelector("#questionnaire");
 const resultEl = document.querySelector("#result");
-//This is the quiz object and contains different properties and methods
+//this is the quiz object that contains different properties and methods
 let quiz = {
     //properties
     timer: "75",
     difficulty: "5",
-    score: "0",
+    score: 0,
+    //this array will store users initials and scores
     userData: [],
+    //this array holds question objects that store both the question and answer
     questionData: [
         {
             question: "JavaScript is used to add what to a web page?",
@@ -98,6 +100,7 @@ let quiz = {
         }
     ],
     //methods
+    //this starts the quiz timer and stops the timer when it hits 0
     start: function() {
         timerInterval = setInterval(function() {
             quiz.timer--;
@@ -109,6 +112,7 @@ let quiz = {
             };
         }, 1000);
     },
+    //this changes the ui to present the user with a prompt to enter in their initials
     end: function() {
         //This removes all nodes from the jumbotron
         removeAllChildNodes(questionnaireEl);
@@ -153,6 +157,7 @@ let quiz = {
             //push user's initials and quiz score to userData array
         quiz.userData.push({initials:inputText,
             score:quiz.score});
+            //this runs the storeData function
             storeData();
             //reset input to blank
             questionnaireInput.value = "";
@@ -167,9 +172,12 @@ let quiz = {
             }
         });
     },
+    //this resets the timer and score when the quiz resets
     reset: function() {
         timerEl.textContent = "Timer: " + quiz.timer;
+        quiz.score = 0;
     },
+    //this generates a new question and changes the UI to present the new question
     generateQuestion: function() {
         //this removes the elements in the jumbotron
         removeAllChildNodes(questionnaireEl);
@@ -179,13 +187,11 @@ let quiz = {
         let button2 = document.createElement("button");
         let button3 = document.createElement("button");
         let button4 = document.createElement("button");
-
         //this styles on the new elements
         button1.setAttribute("class", "btn btn-primary m-2 w-50");
         button2.setAttribute("class", "btn btn-primary m-2 w-50");
         button3.setAttribute("class", "btn btn-primary m-2 w-50");
         button4.setAttribute("class", "btn btn-primary m-2 w-50");
-
         //This stores the randomly grabbed question 
         let question = quiz.getQuestion();
         //This stores answer to question grabbed
@@ -221,49 +227,57 @@ let quiz = {
         button2.addEventListener("click", this.checkAnswer);
         button3.addEventListener("click", this.checkAnswer);
         button4.addEventListener("click", this.checkAnswer);
-
-        //Attach question text to the h1 element
+        //attaches question text to the h1 element
         newH1.textContent = question.question;
-
         //append h1 to the jumbotron
         questionnaireEl.appendChild(newH1);
-
         //appends questions to the jumbotron
         questionnaireEl.appendChild(button1);
         questionnaireEl.appendChild(button2);
         questionnaireEl.appendChild(button3);
         questionnaireEl.appendChild(button4);
-
     },
+    //this checks if the selected answer is correct or incorrect. This will play a correct sound and add a point to the users score, or play an incorrect sound and deduct time from the timer. 
     checkAnswer: function(event) {
+        //this checks if the timer still has time left
         if(quiz.timer > 0){
+            //this grabs the correct answer by id
             let x = document.getElementById("correctAnswer");
-            //Create new sound variables
+            //Creates new sound variables
             let correctSound = new sound("./sounds/soundsilk-Correct.mp3");
             let incorrectSound = new sound("./sounds/soundsilk-Incorrect.mp3");
             //checks if this is the correct answer
             if(event.target.innerHTML === x.textContent){
+                //this adds one to the score
                 quiz.score++;
+                //this will display the result of the answer chosen
                 quiz.displayResult("correct");
-                //Sound is from https://soundsilk.com
+                //Sound is from https://soundsilk.com and will play the correct ding sound
                 correctSound.play();
+                //this will generate the next question
                 return quiz.generateQuestion();
             } else {
+                //this deducts time from the quiz timer according to difficulty
                 quiz.timer = quiz.timer - quiz.difficulty;
+                //this will display the result of the answer chosen
                 quiz.displayResult("incorrect");
-                //Sound is from https://soundsilk.com
+                //Sound is from https://soundsilk.com and will play the incorrect buzzer sound
                 incorrectSound.play();
+                //this will generate the next question
                 return quiz.generateQuestion();
             };
+        //this will display the timer as 0
         } else {
             quiz.timer = 0;
             timerEl.textContent = "Timer: " + quiz.timer;
         };
     },
+    //this randomly chooses a question from the questionData array
     getQuestion: function() {
         let getQuestionDataIndex = Math.floor(Math.random()*quiz.questionData.length);
         return quiz.questionData[getQuestionDataIndex];
     },
+    //this will display the result of the answer either as correct or incorrect
     displayResult: function(result) {
         //remove previous result
         removeAllChildNodes(resultEl);
@@ -272,53 +286,62 @@ let quiz = {
         let h3Incorrect = document.createElement("h3");
         //create hr element
         let hrEl = document.createElement("hr");
-
         //put text in elements
         h3Correct.textContent = "Correct!";
         h3Incorrect.textContent = "Wrong!";
-
-        //add style to elements
+        //add bootstrap class style to elements
         h3Correct.setAttribute("class", "text-success");
         h3Incorrect.setAttribute("class", "text-danger");
+        //this runs if the answer is correct
         if(result === "correct"){
+        //this sets the style of the horizontal rule to show a green line
         hrEl.setAttribute("class", "d-block p-1 bg-success");
+        //appends to the results div a "Correct" and a green line
         resultEl.appendChild(h3Correct);
         resultEl.appendChild(hrEl);
         };
+        //this runs if the answer is incorrect
         if(result === "incorrect"){
+        //this sets the style of the horizontal rule to show a red line
         hrEl.setAttribute("class", "d-block p-1 bg-danger");
+        //appends to the results div a "Wrong" and a red line
         resultEl.appendChild(h3Incorrect);
         resultEl.appendChild(hrEl);
         };
+        //returns the function
         return;
     }
 }
 //adds an event listener to the start quiz button
 startButtonEl.addEventListener("click", function() {
+    //this starts the quiz timer
     quiz.start();
+    //this generates a question and presents it to the UI
     quiz.generateQuestion();
 });
-
 //store userData to local storage
 function storeData() {
+    //this item is stored as a JSON string
     localStorage.setItem("userData", JSON.stringify(quiz.userData));
 };
-
 //Tutorial on how to shuffle an array https://javascript.info/task/shuffle#:~:text=Write%20the%20function%20shuffle(array,%2C%202%5D%20%2F%2F%20...
 function shuffle(array) {
+    //this iterates through the array
     for (let i = array.length - 1; i > 0; i--) {
+        //this randomly changes the index of the array
       let j = Math.floor(Math.random() * (i + 1));
+      //this in a sense shuffles the array by index
       [array[i], array[j]] = [array[j], array[i]];
     };
   };
-
 //Tutorial on how to remove all children elements https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
 function removeAllChildNodes(parent) {
+    //this runs until the node has children
     while (parent.firstChild) {
+        //this removes the children
         parent.removeChild(parent.firstChild);
     };
 };
-
 //initializes localStorage settings and data
 function init(){
     //Get stored initials and high scores from local storage
@@ -340,9 +363,9 @@ function init(){
     if(difficulty !== null){
         quiz.difficulty = difficulty;
     };
+    //this resets the quiz timer and score
     quiz.reset();
 };
-
 //Sound function
 //Tutorial on sounds https://www.w3schools.com/graphics/game_sound.asp
 class sound {
@@ -362,5 +385,5 @@ class sound {
         };
     }
 };
-
+//this initializes the quiz page
 init();
